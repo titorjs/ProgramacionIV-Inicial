@@ -37,8 +37,27 @@ namespace ProgramacionIV.Controllers
         }
 
         // GET: ProductoController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int IdProducto)
         {
+            Producto p = Utils.ListaProductos.Find(x => x.IdProducto == IdProducto);
+            if (p != null)
+            {
+                return View(p);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Producto Producto)
+        {
+            Producto p = Utils.ListaProductos.Find(x => x.IdProducto == Producto.IdProducto);
+            
+            if (p != null)
+            {
+                p.Nombre = Producto.Nombre;
+                p.Cantidad = Producto.Cantidad;
+                p.Descripcion = Producto.Descripcion;
+            }
             return RedirectToAction("Index");
         }
 
