@@ -26,9 +26,9 @@
                 <td>@item.Cantidad</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <button type="button" class="btn btn-warning"><i class="bi bi-pencil"> Editar</i></button>
+                        <button type="button" class="btn btn-warning" ><i class="bi bi-pencil"> Editar</i></button>
                         <button type="button" class="btn btn-success"><i class="bi bi-eye"> Ver</i></button>
-                        <button type="button" class="btn btn-danger"><i class="bi bi-x"> Eliminar</i></button>
+                        <a asp-action="Delete" asp-route-IdProducto="@item.IdProducto" class="btn btn-danger"><i class="bi bi-x"> Eliminar</i></a>
                     </div>
                 </td>
             </tr>
