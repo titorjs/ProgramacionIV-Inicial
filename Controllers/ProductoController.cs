@@ -16,10 +16,16 @@ namespace ProgramacionIV.Controllers
         }
 
         // GET: ProductoController/Details/5
-        public IActionResult Details(int id)
+        public IActionResult Details(int IdProducto)
         {
-            return View();
-        }
+			Producto p = Utils.ListaProductos.Find(x => x.IdProducto == IdProducto);
+			if (p != null)
+			{
+				return View(p);
+			}
+
+            return RedirectToAction("Index");
+		}
 
         // GET: ProductoController/Create
         public IActionResult Create()

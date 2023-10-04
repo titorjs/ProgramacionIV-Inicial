@@ -1,6 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Detalle de producto";
+﻿@model Producto
+
+@{
+	ViewData["Title"] = "Detalles del producto";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>En esta página se muestra el detalle del producto</p>
+<p>En esta página se crean los productos</p>
+
+<form method="post">
+	<fieldset disabled>
+		<div class="mb-3">
+			<label for="nombre" class="form-label">Nombre</label>
+			<input asp-for="Nombre" class="form-control" id="nombre">
+		</div>
+		<div class="mb-3">
+			<label for="descripcion" class="form-label">Descripción</label>
+			<input asp-for="Descripcion" class="form-control" id="descripcion">
+		</div>
+		<div class="mb-3">
+			<label for="cantidad" class="form-label">Cantidad</label>
+			<input asp-for="Cantidad" class="form-control" id="cantidad">
+		</div>
+	</fieldset>
+
+
+	<div class="row">
+		<div class="col-6">
+			<a asp-action="Index" class="btn btn-primary">Volver</a>
+		</div>
+	</div>
+</form>
