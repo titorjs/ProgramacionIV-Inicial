@@ -19,33 +19,20 @@ namespace ProgramacionIV.Controllers
         }
 
         // GET: ProductoController
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Producto> products = new List<Producto>();
-
-            HttpResponseMessage response = _client.GetAsync(_client.BaseAddress).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                products = JsonConvert.DeserializeObject<List<Producto>>(data);
-            }
+            List<Producto> products = await _client.GetFromJsonAsync<List<Producto>>(_client.BaseAddress);
 
             return View(products);
         }
 
         // GET: ProductoController/Details/5
-        public IActionResult Details(int IdProducto)
+        public async Task<IActionResult> Details(int IdProducto)
         {
-            Producto p;
+            Producto p = await _client.GetFromJsonAsync<Producto>(_client.BaseAddress + "/" + IdProducto);
 
-			HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/" + IdProducto).Result;
-
-			if (response.IsSuccessStatusCode)
+			if (p != null)
 			{
-				string data = response.Content.ReadAsStringAsync().Result;
-				p = JsonConvert.DeserializeObject<Producto>(data);
-
                 return View(p);
 			}
 
@@ -53,46 +40,42 @@ namespace ProgramacionIV.Controllers
 		}
 
         // GET: ProductoController/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Producto p)
+        public async Task<IActionResult> Create(Producto p)
         {
-            HttpResponseMessage response = _client.PostAsJsonAsync(_client.BaseAddress, p).Result;
+            var a = await _client.PostAsJsonAsync(_client.BaseAddress, p);
 			return RedirectToAction("Index");
         }
 
         // GET: ProductoController/Edit/5
-        public ActionResult Edit(int IdProducto)
+        public async Task<ActionResult> Edit(int IdProducto)
         {
-            Producto p;
-			HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/" + IdProducto).Result;
+            Producto p = await _client.GetFromJsonAsync<Producto>(_client.BaseAddress + "/" + IdProducto);
 
-			if (response.IsSuccessStatusCode)
+			if (p != null)
 			{
-				string data = response.Content.ReadAsStringAsync().Result;
-				p = JsonConvert.DeserializeObject<Producto>(data);
-
 				return View(p);
 			}
 			return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult Edit(Producto Producto)
+        public async Task<ActionResult> Edit(Producto Producto)
         {
-			HttpResponseMessage response = _client.PutAsJsonAsync(_client.BaseAddress + "/" + Producto.IdProducto, Producto).Result;
+			await _client.PutAsJsonAsync(_client.BaseAddress + "/" + Producto.IdProducto, Producto);
 
             return RedirectToAction("Index");
         }
 
         // GET: ProductoController/Delete/5
-        public ActionResult Delete(int IdProducto)
+        public async Task<ActionResult> Delete(int IdProducto)
         {
-			HttpResponseMessage response = _client.DeleteAsync(_client.BaseAddress + "/" + IdProducto).Result;
+			await _client.DeleteAsync(_client.BaseAddress + "/" + IdProducto);
 
 			return RedirectToAction("Index");
         }
