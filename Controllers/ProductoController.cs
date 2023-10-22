@@ -73,6 +73,7 @@ namespace ProgramacionIV.Controllers
         }
 
         // GET: ProductoController/Delete/5
+        [HttpDelete]
         public async Task<ActionResult> Delete(int IdProducto)
         {
 			await _client.DeleteAsync(_client.BaseAddress + "/" + IdProducto);
